@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import { WavesContext } from '../WavesContext';
+import { WavesContext } from '../contexts/WavesContext';
 import Wave from "./Wave";
 import Modal from "./Modal";
 
@@ -42,6 +42,7 @@ export default function Card(props) {
             </div>
 
             {sortedWaves.map(wave => {
+                console.log(wave);
                 return (
                     <Wave key={wave.timestamp.toString()} wave={wave} />
                 )

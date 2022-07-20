@@ -1,76 +1,18 @@
-import { Fragment, useState } from 'react'
-import { Dialog, Transition } from '@headlessui/react'
-import { CheckIcon, ExclamationCircleIcon, ClockIcon } from '@heroicons/react/outline'
+import { Fragment, useState, useContext } from 'react';
+import { Dialog, Transition } from '@headlessui/react';
+import { NotificationContext } from '../contexts/NotificationContext';
+import { ShowNotificationContext } from '../contexts/NotificationContext';
+import { Pending } from './Notifications';
 
 export default function Modal({ open, setOpen, wave }) {
     const [message, setMessage] = useState('');
 
+    const { setNotificationContent } = useContext(NotificationContext);
+    const { setShowNotification } = useContext(ShowNotificationContext);
+
     const handleChange = event => {
         event.preventDefault();
         setMessage(event.target.value);
-    };
-    
-    const Success = () => {
-        return (
-            <div>
-                <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
-                    <CheckIcon className="h-6 w-6 text-green-600" aria-hidden="true" />
-                </div>
-
-                <div className="mt-3 text-center sm:mt-5">
-                    <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900">
-                        Transaction successful
-                    </Dialog.Title>
-                    <div className="mt-2">
-                        <p className="text-sm text-gray-500">
-                            Your message was successfully added to the blockchain.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        );
-    };
-
-    const Failure = () => {
-        return (
-            <div>
-                <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100">
-                    <ExclamationCircleIcon className="h-6 w-6 text-red-600" aria-hidden="true" />
-                </div>
-
-                <div className="mt-3 text-center sm:mt-5">
-                    <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900">
-                        Transaction failed
-                    </Dialog.Title>
-                    <div className="mt-2">
-                        <p className="text-sm text-gray-500">
-                            The transaction failed and your message was not saved on the blockchain.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        );
-    };
-
-    const Pending = () => {
-        return (
-            <div>
-                <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full animate-bounce">
-                    <ClockIcon className="h-6 w-6 text-indigo-600" aria-hidden="true" />
-                </div>
-
-                <div className="mt-3 text-center sm:mt-5">
-                    <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900">
-                        Transaction pending
-                    </Dialog.Title>
-                    <div className="mt-2">
-                        <p className="text-sm text-gray-500">
-                            Your transaction is mining...
-                        </p>
-                    </div>
-                </div>
-            </div>
-        );
     };
 
     const submitForm = (e) => {
@@ -78,7 +20,10 @@ export default function Modal({ open, setOpen, wave }) {
         console.log('submitting form with message:', message);
         wave(message);
         setMessage('');
-    }
+        setOpen(false);
+        setNotificationContent(<Pending />);
+        setShowNotification(true);
+    };
 
     return (
         <Transition.Root show={open} as={Fragment}>
@@ -154,5 +99,5 @@ export default function Modal({ open, setOpen, wave }) {
             </div>
         </Dialog>
         </Transition.Root>
-    )
-}
+    );
+};

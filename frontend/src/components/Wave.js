@@ -11,23 +11,24 @@ export default function Wave({ wave }) {
         <div className="bg-white px-4 py-5 sm:px-6 border-b border-indigo-100">
             <div className="flex space-x-3">
                 <div className="flex-shrink-0">
-                <img
-                    className="h-10 w-10 rounded-full"
-                    src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                    alt=""
-                />
+                    <img
+                        className="h-10 w-10 rounded-full"
+                        src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                        alt=""
+                    />
                 </div>
                 <div className="min-w-0 flex-1">
-                <p className="text-sm font-medium text-gray-900">
-                    <a href="#" className="hover:underline">
-                    {wave.message}
-                    </a>
-                </p>
-                <p className="text-sm text-gray-500">
-                    <a href={wave.transaction} className="hover:underline" target="_blank">
-                        {wave.timestamp.toString()}
-                    </a>
-                </p>
+                    <p className="text-sm font-medium text-gray-900">
+                        {wave.message}
+                    </p>
+                    <p className="text-sm text-gray-500">
+                        <a href={wave.transaction} className="hover:underline" target="_blank" rel='noreferrer'>
+                            {wave.timestamp.toString()}
+                        </a>
+                    </p>
+                    <p className="text-sm font-sm text-gray-500">
+                        <span className='font-semibold'>From</span>: <a href={`https://goerli.etherscan.io/address/${wave.address}`} target='_blank' rel='noreferrer' className='hover:underline'>{wave.address.slice(0,6) + '...' + wave.address.slice(38)}</a>
+                    </p>
                 </div>
 
 

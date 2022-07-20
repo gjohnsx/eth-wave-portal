@@ -1,7 +1,7 @@
 import { Fragment, useContext } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { BellIcon, MenuIcon, XIcon, UserCircleIcon } from '@heroicons/react/outline';
-import { UserContext } from '../UserContext';
+import { UserContext } from '../contexts/UserContext';
 
 const navigation = [
     { name: 'Dashboard', href: '#', current: true },

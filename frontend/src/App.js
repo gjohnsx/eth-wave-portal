@@ -1,12 +1,20 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { Fragment, useState, useEffect, useMemo } from 'react';
 import { ethers } from "ethers";
-import { UserContext } from './UserContext';
-import { WavesContext } from './WavesContext';
+import { UserContext } from './contexts/UserContext';
+import { WavesContext } from './contexts/WavesContext';
+import { NotificationContext, ShowNotificationContext } from './contexts/NotificationContext';
+import { CheckCircleIcon } from '@heroicons/react/outline';
+import { XIcon } from '@heroicons/react/solid';
+import { Transition } from '@headlessui/react'
 import Navbar from './components/Navbar';
 import Header from './components/Header';
 import Dashboard from './components/Dashboard';
 import abi from "./utils/WavePortal.json";
+
+import { Pending, Success, Failed } from './components/Notifications';
+
 const WAVE_PORTAL_ADDRESS = '0x470cA8952372fBcdccdbE32618bFf890d1AA5fCB';
+
 
 
 const initialWaves = [
@@ -54,13 +62,21 @@ const initialUser = {
       'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
 };
 
+
 function App() {
   const [currentAccount, setCurrentAccount] = useState(null);
+
   const [currentUserData, setCurrentUserData] = useState(initialUser);
   const currentUserDataValue = useMemo(() => ({ currentUserData, setCurrentUserData }), [currentUserData, setCurrentUserData]);
 
   const [waves, setWaves] = useState([]);
   const wavesValue = useMemo(() => ({ waves, setWaves }), [waves, setWaves]);
+
+  const [notificationContent, setNotificationContent] = useState('');
+  const notificationContentValue = useMemo(() => ({ notificationContent, setNotificationContent }), [notificationContent, setNotificationContent]);
+  
+  const [showNotification, setShowNotification] = useState(true);
+  const showNotificationValue = useMemo(() => ({ showNotification, setShowNotification }), [showNotification, setShowNotification]);
 
   const contractAddress = WAVE_PORTAL_ADDRESS;
   const contractABI = abi.abi;
@@ -129,6 +145,7 @@ function App() {
 
         await waveTxn.wait();
         console.log("Mined -- ", waveTxn.hash);
+        setNotificationContent(<Success hash={waveTxn.hash} />)
 
         count = await wavePortalContract.getTotalWaves();
         console.log("Retrieved total wave count...", count.toNumber());
@@ -139,6 +156,7 @@ function App() {
       }
     } catch (error) {
       console.log(error);
+      setNotificationContent(<Failed reason={error} />)
     }
   };
 
@@ -203,46 +221,64 @@ function App() {
   return (
     <UserContext.Provider value={currentUserDataValue}>
       <WavesContext.Provider value={wavesValue}>
-        <div className="mainContainer">
+        <NotificationContext.Provider value={notificationContentValue}>
+          <ShowNotificationContext.Provider value={showNotificationValue}>
+            
+            <div className="mainContainer">
 
-          <Navbar 
-            currentAccount={currentAccount}
-            connectWallet={connectWallet}
-            disconnectWallet={disconnectWallet}
-          />
+              <Navbar 
+                currentAccount={currentAccount}
+                connectWallet={connectWallet}
+                disconnectWallet={disconnectWallet}
+              />
 
-          
-          {!currentAccount && <Header />}
+              {!currentAccount && <Header />}
 
-          {currentAccount && (
-            <Dashboard 
-              wave={wave}
-            />
-            )
-          }
+              {currentAccount && (
+                <Dashboard 
+                  wave={wave}
+                />
+                )
+              }
 
-          <div className='text-center'>
-            <button 
-              className="waveButton inline-flex items-center px-4 py-2 mr-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              onClick={currentAccount ? disconnectWallet : connectWallet}
-            >
-              {currentAccount ? 'Disconnect Wallet' : 'Connect Wallet'}
-            </button>
+              <div className='text-center'>
+                <button 
+                  className="waveButton inline-flex items-center px-4 py-2 mr-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  onClick={currentAccount ? disconnectWallet : connectWallet}
+                >
+                  {currentAccount ? 'Disconnect Wallet' : 'Connect Wallet'}
+                </button>
 
-            {currentAccount && (
-              <button 
-                className="waveButton inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                onClick={wave}
+                {currentAccount && (
+                  <button 
+                    className="waveButton inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    onClick={wave}
+                  >
+                    Wave at me
+                  </button>
+                )}
+
+                  <h3 className='wave-count'>Current wave count: {waves.length}</h3>
+                  <p className='faucet-link'><small>You can get Goerli eth from <a href="https://faucets.chain.link/goerli" target="_blank" className='underline'>Chainlink</a>.</small></p>
+              </div>
+              
+
+              {/* Global notification live region, render this permanently at the end of the document */}
+              <div
+                aria-live="assertive"
+                className="fixed inset-0 flex items-end px-4 py-6 pointer-events-none sm:p-6 sm:items-start"
               >
-                Wave at me
-              </button>
-            )}
+                <div className="w-full flex flex-col items-center space-y-4 sm:items-end">
+                  {/* Notification panel, dynamically insert this into the live region when it needs to be displayed */}
+                  {showNotification && notificationContent}
+                </div>
+              </div>
 
-            <h3 className='wave-count'>Current wave count: {waves.length}</h3>
-            <p className='faucet-link'><small>You can get Goerli eth from <a href="https://faucets.chain.link/goerli" target="_blank" className='underline'>Chainlink</a>.</small></p>
-          </div>
-        </div>
-        </WavesContext.Provider>
+            </div>
+                
+          </ShowNotificationContext.Provider>
+        </NotificationContext.Provider>
+      </WavesContext.Provider>
     </UserContext.Provider>
   );
 };
