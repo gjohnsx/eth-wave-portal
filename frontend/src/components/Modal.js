@@ -9,36 +9,6 @@ export default function Modal({ open, setOpen, wave }) {
         event.preventDefault();
         setMessage(event.target.value);
     };
-
-    const MessageInput = () => {
-        return (
-            <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                    Message
-                </label>
-                <div className="mt-1">
-                    <form onSubmit={submitForm}>
-                        <input
-                            type="text"
-                            name="message"
-                            id="message"
-                            className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-300 rounded-md p-2 mb-2"
-                            placeholder="Your permanent message..."
-                            onChange={handleChange}
-                            value={message}
-                            required
-                        />
-                        <button
-                            type="submit"
-                            className="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-white font-medium hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm mb-2"
-                        >
-                            Add a wave
-                        </button>
-                    </form>
-                </div>
-            </div>
-        );
-    };
     
     const Success = () => {
         return (

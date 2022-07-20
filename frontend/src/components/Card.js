@@ -10,7 +10,7 @@ export default function Card(props) {
         setOpen(prevOpen => !prevOpen);
     };
 
-    const { waves, setWaves } = useContext(WavesContext);
+    const { waves } = useContext(WavesContext);
 
     const sortedWaves = waves.sort((a, b) => b.timestamp - a.timestamp)
 

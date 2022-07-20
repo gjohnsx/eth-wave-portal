@@ -7,9 +7,6 @@ function classNames(...classes) {
 };
 
 export default function Wave({ wave }) {
-    console.log('\n inside WAVE:\nwave=', wave);
-    console.log('wave.timestamp =', wave.timestamp, typeof wave.timestamp);
-
     return (
         <div className="bg-white px-4 py-5 sm:px-6 border-b border-indigo-100">
             <div className="flex space-x-3">

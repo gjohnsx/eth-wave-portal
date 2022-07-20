@@ -1,6 +1,7 @@
-import { Fragment } from 'react';
+import { Fragment, useContext } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { BellIcon, MenuIcon, XIcon, UserCircleIcon } from '@heroicons/react/outline';
+import { UserContext } from '../UserContext';
 
 const navigation = [
     { name: 'Dashboard', href: '#', current: true },
@@ -33,8 +34,10 @@ function classNames(...classes) {
 };
 
 const Navbar = props => {
+    const { currentUserData } = useContext(UserContext);
+
     const profileImg = props.currentAccount
-        ? <img src={props.user.imageUrl} alt='user profile img' className='h-8 w-8 rounded-full' />
+        ? <img src={currentUserData.imageUrl} alt='user profile img' className='h-8 w-8 rounded-full' />
         : <UserCircleIcon className="block h-8 w-8"/>
 
     return (
@@ -166,11 +169,11 @@ const Navbar = props => {
 
                     <div className="flex items-center px-5">
                         <div className="flex-shrink-0">
-                            <img className="h-10 w-10 rounded-full" src={props.user.imageUrl} alt="" />
+                            <img className="h-10 w-10 rounded-full" src={currentUserData.imageUrl} alt="" />
                         </div>
                         <div className="ml-3">
-                            <div className="text-base font-medium text-white">{props.user.name}</div>
-                            <div className="text-sm font-medium text-indigo-300">{props.user.email}</div>
+                            <div className="text-base font-medium text-white">{currentUserData.name}</div>
+                            <div className="text-sm font-medium text-indigo-300">{currentUserData.email}</div>
                         </div>
                         <button
                             type="button"

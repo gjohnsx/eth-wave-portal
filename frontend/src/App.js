@@ -55,11 +55,10 @@ const initialUser = {
 };
 
 function App() {
-  const [currentAccount, setCurrentAccount] = useState(false);
+  const [currentAccount, setCurrentAccount] = useState(null);
   const [currentUserData, setCurrentUserData] = useState(initialUser);
   const currentUserDataValue = useMemo(() => ({ currentUserData, setCurrentUserData }), [currentUserData, setCurrentUserData]);
 
-  const [waveCount, setWaveCount] = useState(0);
   const [waves, setWaves] = useState([]);
   const wavesValue = useMemo(() => ({ waves, setWaves }), [waves, setWaves]);
 
@@ -129,7 +128,6 @@ function App() {
     } catch (error) {
       console.log(error);
     }
-    // setWaveCount(prevWaveCount => prevWaveCount + 1);
   };
 
   const connectWallet = async () => {
@@ -146,13 +144,14 @@ function App() {
 
       console.log('\nConnected...', accounts[0]);
       setCurrentAccount(accounts[0]);
+      getAllWaves();
     } catch(error) {
       console.log(error);
     }
   };
 
   const disconnectWallet = () => {
-    setCurrentAccount('');
+    setCurrentAccount(null);
   };
 
   const checkIfWalletIsConnected = async () => {
@@ -175,6 +174,7 @@ function App() {
         getAllWaves();
       } else {
         console.log('no authorized account found.');
+        setCurrentAccount(null);
       }
     } catch(error) {
       console.log(error);
@@ -185,8 +185,8 @@ function App() {
     checkIfWalletIsConnected();
   }, []);
 
-  console.log('currentAccount =', currentAccount);
-  console.log('waves =', waves);
+  // console.log('currentAccount =', currentAccount);
+  // console.log('waves =', waves);
   
   return (
     <UserContext.Provider value={currentUserDataValue}>
@@ -195,7 +195,6 @@ function App() {
 
           <Navbar 
             currentAccount={currentAccount}
-            user={currentUserData} 
             connectWallet={connectWallet}
             disconnectWallet={disconnectWallet}
           />
@@ -205,9 +204,7 @@ function App() {
 
           {currentAccount && (
             <Dashboard 
-              signOut={disconnectWallet}
               wave={wave}
-              waveCount={waveCount}
             />
             )
           }
@@ -229,7 +226,7 @@ function App() {
               </button>
             )}
 
-            <h3 className='wave-count'>Current wave count: {waveCount}</h3>
+            <h3 className='wave-count'>Current wave count: {waves.length}</h3>
             <p className='faucet-link'><small>You can get Goerli eth from <a href="https://faucets.chain.link/goerli" target="_blank" className='underline'>Chainlink</a>.</small></p>
           </div>
         </div>
