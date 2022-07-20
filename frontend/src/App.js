@@ -65,6 +65,18 @@ function App() {
   const contractAddress = WAVE_PORTAL_ADDRESS;
   const contractABI = abi.abi;
 
+  // Detect change in Metamask account
+  useEffect(() => {
+    if (window.ethereum) {
+      window.ethereum.on("chainChanged", () => {
+        window.location.reload();
+      });
+      window.ethereum.on("accountsChanged", () => {
+        window.location.reload();
+      });
+    }
+  });
+
   const getAllWaves = async () => {
     try {
       const { ethereum } = window;
