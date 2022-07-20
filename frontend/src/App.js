@@ -75,7 +75,7 @@ function App() {
         window.location.reload();
       });
     }
-  });
+  }, [currentAccount]);
 
   const getAllWaves = async () => {
     try {
