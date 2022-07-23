@@ -234,6 +234,16 @@ function App() {
 
               {!currentAccount && <Header />}
 
+              {/* <button
+                onClick={() => {
+                  setNotificationContent(<Pending />)
+                  setShowNotification(!showNotification);
+                }}
+                className='border p-3 bg-yellow-300'
+              >
+                Notification debugger
+              </button> */}
+
               {currentAccount && (
                 <Dashboard 
                   wave={wave}
@@ -259,7 +269,8 @@ function App() {
                 )}
 
                   <h3 className='wave-count'>Current wave count: {waves.length}</h3>
-                  <p className='faucet-link'><small>You can get Goerli eth from <a href="https://faucets.chain.link/goerli" target="_blank" className='underline'>Chainlink</a>.</small></p>
+
+                  <p className=''><small>You can get Goerli eth from <a href="https://faucets.chain.link/goerli" target="_blank" rel='noreferrer' className='underline'>Chainlink</a>.</small></p>
               </div>
               
 

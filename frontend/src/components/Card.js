@@ -42,7 +42,6 @@ export default function Card(props) {
             </div>
 
             {sortedWaves.map(wave => {
-                console.log(wave);
                 return (
                     <Wave key={wave.timestamp.toString()} wave={wave} />
                 )

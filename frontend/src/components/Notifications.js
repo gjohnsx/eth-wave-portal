@@ -9,7 +9,6 @@ export function Success({ hash }) {
 
     return (
         <>
-            {/* Notification panel, dynamically insert this into the live region when it needs to be displayed */}
             <Transition
                 show={show}
                 as={Fragment}
@@ -49,15 +48,14 @@ export function Success({ hash }) {
                 </div>
             </Transition>
         </>
-    )
-}
+    );
+};
 
 export function Pending({ hash }) {
     const [show, setShow] = useState(true);
 
     return (
         <>
-            {/* Notification panel, dynamically insert this into the live region when it needs to be displayed */}
             <Transition
                 show={show}
                 as={Fragment}
@@ -95,15 +93,14 @@ export function Pending({ hash }) {
                 </div>
             </Transition>
         </>
-    )
-}
+    );
+};
 
 export function Failed({ reason }) {
     const [show, setShow] = useState(true);
 
     return (
         <>
-            {/* Notification panel, dynamically insert this into the live region when it needs to be displayed */}
             <Transition
                 show={show}
                 as={Fragment}
@@ -143,5 +140,5 @@ export function Failed({ reason }) {
                 </div>
             </Transition>
         </>
-    )
-}
+    );
+};

@@ -27,7 +27,7 @@ export default function Wave({ wave }) {
                         </a>
                     </p>
                     <p className="text-sm font-sm text-gray-500">
-                        <span className='font-semibold'>From</span>: <a href={`https://goerli.etherscan.io/address/${wave.address}`} target='_blank' rel='noreferrer' className='hover:underline'>{wave.address.slice(0,6) + '...' + wave.address.slice(38)}</a>
+                        <span className='font-semibold'>From</span>: <a href={`https://goerli.etherscan.io/address/${wave.address}`} target='_blank' rel='noreferrer' className='underline hover:text-indigo-800'>{wave.address.slice(0,6) + '...' + wave.address.slice(38)}</a>
                     </p>
                 </div>
 
