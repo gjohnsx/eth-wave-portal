@@ -1,7 +1,8 @@
 import { Fragment, useContext } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
-import { BellIcon, MenuIcon, XIcon, UserCircleIcon } from '@heroicons/react/outline';
+import { BellIcon, MenuIcon, XIcon, UserCircleIcon, InformationCircleIcon } from '@heroicons/react/outline';
 import { UserContext } from '../contexts/UserContext';
+import { Popover } from '@headlessui/react'
 
 const navigation = [
     { name: 'Dashboard', href: '#', current: true },
@@ -88,7 +89,8 @@ const Navbar = props => {
                             </Menu.Button>
 
                             </div>
-                            <Transition
+                            
+                            {/* <Transition
                             as={Fragment}
                             enter="transition ease-out duration-100"
                             enterFrom="transform opacity-0 scale-95"
@@ -98,19 +100,21 @@ const Navbar = props => {
                             leaveTo="transform opacity-0 scale-95"
                             >
                             <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                <Menu.Item>
+
+                                <Menu.Item className='flex'>
                                     <button
                                         className={classNames(
                                         'block px-4 py-2 text-sm',
                                         'text-indigo-500 hover:text-indigo-600'
                                         )}
                                         onClick={props.currentAccount ? props.disconnectWallet : props.connectWallet}
+                                        disabled
                                     >
                                         Sign {props.currentAccount ? 'out' : 'in'}
                                     </button>
                                 </Menu.Item>
 
-                                {/* {userNavigation.map((item) => (
+                                {userNavigation.map((item) => (
                                 <Menu.Item key={item.name}>
                                     {({ active }) => (
                                     <a
@@ -124,9 +128,10 @@ const Navbar = props => {
                                     </a>
                                     )}
                                 </Menu.Item>
-                                ))} */}
+                                ))}
                             </Menu.Items>
-                            </Transition>
+                            </Transition> */}
+
                         </Menu>
                         </div>
                     </div>

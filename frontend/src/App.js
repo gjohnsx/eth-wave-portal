@@ -249,21 +249,23 @@ function App() {
               }
 
               <div className='text-center'>
-                <button 
-                  className="waveButton inline-flex items-center px-4 py-2 mr-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                  onClick={currentAccount ? disconnectWallet : connectWallet}
-                >
-                  {currentAccount ? 'Disconnect Wallet' : 'Connect Wallet'}
-                </button>
+                {!currentAccount && (
+                  <button 
+                    className="waveButton inline-flex items-center px-4 py-2 mr-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    onClick={currentAccount ? disconnectWallet : connectWallet}
+                  >
+                    Connect Wallet
+                  </button>
+                )}
 
-                {currentAccount && (
+                {/* {currentAccount && (
                   <button 
                     className="waveButton inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     onClick={wave}
                   >
                     Wave at me
                   </button>
-                )}
+                )} */}
 
                   <h3 className='wave-count'>Current wave count: {waves.length}</h3>
 
