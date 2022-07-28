@@ -1,6 +1,6 @@
 import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
-import { CodeIcon, DotsVerticalIcon, FlagIcon, StarIcon, ShieldCheckIcon } from '@heroicons/react/solid'
+import { CodeIcon, DotsVerticalIcon, FlagIcon, ShieldCheckIcon } from '@heroicons/react/solid'
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')

@@ -1,11 +1,8 @@
-import React, { Fragment, useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { ethers } from "ethers";
 import { UserContext } from './contexts/UserContext';
 import { WavesContext } from './contexts/WavesContext';
 import { NotificationContext, ShowNotificationContext } from './contexts/NotificationContext';
-import { CheckCircleIcon } from '@heroicons/react/outline';
-import { XIcon } from '@heroicons/react/solid';
-import { Transition } from '@headlessui/react'
 import Navbar from './components/Navbar';
 import Header from './components/Header';
 import Dashboard from './components/Dashboard';
