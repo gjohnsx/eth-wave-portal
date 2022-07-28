@@ -1,6 +1,7 @@
 import Card from './Card';
 
 export default function Dashboard(props) {
+    console.log(props)
     return (
         <>
             <div className="min-h-full">
