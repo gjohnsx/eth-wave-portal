@@ -270,9 +270,22 @@ function App() {
                     FAKE Connect Wallet
                   </button>
                 )} */}
+
+                <div className='my-4 flex flex-col'>
+                  <label className='text-gray-500'>Demo Video</label>
+                  <iframe src='https://res.cloudinary.com/dmffmaosi/video/upload/v1659045277/eth-wave-portal-demo_szxhof.mp4'
+                      frameborder='0'
+                      allow='autoplay; encrypted-media'
+                      allowfullscreen="true"
+                      title='video'
+                      width={800}
+                      height={400}
+                      className='mx-auto rounded'
+                  />
+                </div>
                 
-                  <h3 className='wave-count'>Current wave count: {waves.length}</h3>
-                  <p className=''><small>You can get Goerli eth from <a href="https://faucets.chain.link/goerli" target="_blank" rel='noreferrer' className='underline'>Chainlink</a>.</small></p>
+                <h3 className='wave-count'>Current wave count: {waves.length}</h3>
+                <p className=''><small>You can get Goerli eth from <a href="https://faucets.chain.link/goerli" target="_blank" rel='noreferrer' className='underline'>Chainlink</a>.</small></p>
               </div>
               
 
